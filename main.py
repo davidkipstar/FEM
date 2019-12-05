@@ -28,13 +28,20 @@ def _write(fname, **data):
                     f.write(line)
                     f.write('\n')
                 if key == 'A':
-                    logging.debug(f"{key}")
-                    for row in matrix:
-                        line = ' '.join(list(map(str, row)))
+                    logging.debug(f"{key}: {type(A[0])}")
+                    
+                    if type(A[0]) != list:
+                        line = ' '.join(list(map(str, matrix)))
                         logging.debug(line)
                         f.write(line)
                         f.write('\n')
-        return True
+                    else:
+
+                        for row in matrix:
+                            line = ' '.join(list(map(str, row)))
+                            logging.debug(line)
+                            f.write(line)
+                            f.write('\n')
 
     except Exception as e:
         print(e)
