@@ -6,8 +6,9 @@ def FME(A, b, k, n):
     for m in range(n_it):
    
         if A == [0 for j in range(n)]:
-            A = [0 for j in range(n-1)]
-            b = [0]
+            A = [[0] for j in range(n-1)]
+            b = [0 for j in range(n-1)]
+            logging.debug(f"A: {A}, b: {b}")
             return A, b 
 
         else:

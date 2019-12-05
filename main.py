@@ -16,7 +16,7 @@ logger.setLevel(logging.DEBUG)
 def _write(fname, **data):
     try:
         logging.debug(f"Writing to {fname}: \n {data}")
-        
+
         with open(fname, 'w') as f:
             for key, matrix in data.items():
                 f.write(key)
@@ -29,7 +29,7 @@ def _write(fname, **data):
                     f.write('\n')
                 if key == 'A':
                     logging.debug(f"{key}: {type(A[0])}")
-                    
+
                     if type(A[0]) != list:
                         line = ' '.join(list(map(str, matrix)))
                         logging.debug(line)
@@ -72,13 +72,14 @@ def _parser(filepath, identifier = 'A'):
 
 argv = sys.argv
 arg = sys.argv[1]
+
 if arg == 'project':
     input_file = argv[2]
     k = int(argv[3])
-    
+
     A =  _parser(input_file, identifier = 'A')
     b =  _parser(input_file, identifier = 'b')
-    
+
     logging.debug(f"Projecting with k: {k}")
     logging.debug(f"A : {A}")
     logging.debug(f"b : {b}")
@@ -99,10 +100,10 @@ elif arg == 'image':
     input_file_1 = argv[2]
     input_file_2 = argv[3]
     output_file  = argv[4]
-    
+
     A =  _parser(input_file_1, identifier = 'A')
     b =  _parser(input_file_1, identifier = 'b')
-    
+
     M =  _parser(input_file_2, identifier = 'M')
     logging.debug(f"M : {M}")
     logging.debug(f"A : {A}")
