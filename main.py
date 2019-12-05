@@ -72,7 +72,6 @@ if arg == 'project':
             'b' : b
             })
 
-
 elif arg == 'image':
     input_file_1 = argv[2]
     input_file_2 = argv[3]
@@ -98,8 +97,7 @@ elif arg == 'H_representation':
     output_file  = argv[3]
     
     X =  _parser(input_file, identifier = 'X')
-    logging.debug(f"X : {X}")
-    
+
     A, b = convex_hull(X)
 
     _write(output_file, **{
@@ -109,5 +107,11 @@ elif arg == 'H_representation':
 
 elif arg == 'compute_x_or_y':
     input_file = argv[2]
+    output_file  = argv[3]
+
     A = _parser(input_file, identifier = 'A')
     b = _parser(input_file, identifier = 'b')
+
+    BOOL, x = compute_x_or_y(A, b)
+
+    logging.debug(f"{BOOL} : {x}")
