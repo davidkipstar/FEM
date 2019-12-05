@@ -72,10 +72,15 @@ if arg == 'project':
     A =  _parser(input_file, identifier = 'A')
     b =  _parser(input_file, identifier = 'b')
     
+    logging.debug(f"Projecting with k: {k}")
     logging.debug(f"A : {A}")
     logging.debug(f"b : {b}")
     n = len(A[0])
     A, b = project(A,b, k, n)
+
+    logging.debug(f"Result from project: ")
+    logging.debug(f"\t A: {A}")
+    logging.debug(f"\t b : {b}")
     output_file = argv[4]
 
     _write(output_file, **{
