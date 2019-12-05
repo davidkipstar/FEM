@@ -1,4 +1,7 @@
 from sys import argv
+import logging 
+logger = logging.getLogger()
+logger.setLevel(logging.DEBUG)
 
 from subprocess import run, PIPE, STDOUT
 from ast import literal_eval
@@ -16,6 +19,9 @@ def testequalpolyhedra(ineq1,ineq2,testpoints):
   for x in testpoints:
     inP1 = 1
     A, b = ineq1
+    #logging.debug("Left:")
+    #logging.debug(f"A: {A}")
+    #logging.debug(f"b: {b}")
     for i in range(len(A)):
       lhs = sum(A[i][j]*x[j] for j in range(len(A[i])))
       if lhs < b[i]-0.0000000000003:
@@ -25,6 +31,9 @@ def testequalpolyhedra(ineq1,ineq2,testpoints):
         inP1 = 0
     inP2 = 1
     A, b = ineq2
+    #logging.debug("Right:")
+    #logging.debug(f"A: {A}")
+    #logging.debug(f"b: {b}")
     for i in range(len(A)):
       lhs = sum(A[i][j]*x[j] for j in range(len(A[i])))
       if lhs < b[i]-0.00000000000001:

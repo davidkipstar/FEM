@@ -15,18 +15,27 @@ logger.setLevel(logging.DEBUG)
 
 def _write(fname, **data):
     try:
+        logging.debug(f"Writing to {fname}: \n {data}")
+        
         with open(fname, 'w') as f:
-            for key, lines in data.items():
+            for key, matrix in data.items():
                 f.write(key)
                 f.write('\n')
                 if key == 'b':
-                    f.write(' '.join(list(map(str,line))))
+                    logging.debug("b")
+                    line =  ' '.join(list(map(str, matrix)))
+                    logging.debug(line)
+                    f.write(line)
                     f.write('\n')
-                else:
-                    for line in lines:
-                        f.write(' '.join(list(map(str,line))))
+                if key == 'A':
+                    logging.debug(f"{key}")
+                    for row in matrix:
+                        line = ' '.join(list(map(str, row)))
+                        logging.debug(line)
+                        f.write(line)
                         f.write('\n')
         return True
+
     except Exception as e:
         print(e)
 
@@ -50,6 +59,8 @@ def _parser(filepath, identifier = 'A'):
                 A.append(list(map(float, line.split(' '))))
                 if identifier == 'b':
                     A = list(map(float, line.split(' ')))
+
+        logging.debug(f"Parsed {identifier}: \n {A}")
     return A
 
 argv = sys.argv
