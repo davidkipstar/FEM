@@ -1,7 +1,7 @@
 from sys import argv
 import logging 
 logger = logging.getLogger()
-logger.setLevel(logging.DEBUG)
+logger.setLevel(logging.INFO)
 
 from subprocess import run, PIPE, STDOUT
 from ast import literal_eval
@@ -262,7 +262,7 @@ def test_compute_x_or_y(instancefile):
         return False
   return True
 
-#print("Test project: {}".format(test_project("./project_instances.dat","./project_solutions.dat","./testpoints.dat")))
+print("Test project: {}".format(test_project("./project_instances.dat","./project_solutions.dat","./testpoints.dat")))
 print("Test image: {}".format(test_image("./image_instances.dat","./image_solutions.dat","./testpoints.dat")))
 print("Test H_representation: {}".format(test_H_representation("./H_representation_instances.dat",
                                                         "./H_representation_solutions.dat",

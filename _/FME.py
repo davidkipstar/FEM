@@ -1,8 +1,12 @@
 import logging 
 import math
 
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.WARNING)
+
 def FME(A, b, k, n):
     n_it = n - k
+    logging.debug("FME")
     for m in range(n_it):
    
         if A == [0 for j in range(n)]:

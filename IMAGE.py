@@ -13,8 +13,16 @@ def image(M, A, b):
     #   affine mapping
     #   with block structure matrix
     #size of submatrices
+    # #############
+    # M_pos I_pos # 0
+    # M_neg I_neg # 0
+    # A     0     # b
+    # ############# #
+
     M_m, M_n = len(M), len(M[0])
     A_m, A_n = len(A), len(A[0])
+    logging.debug(f"M: {M}, A: {A}, b: {b}")
+    logging.debug(f"Image with M has {M_m} rows, {M_n} columns")
 
     #Size of final matrix
     m = 2*M_m + A_m
@@ -24,27 +32,40 @@ def image(M, A, b):
     I_pos = [[0 if i != j else 1  for i in range(M_m)] for j in range(M_m)]
     I_neg = [[0 if i != j else -1 for i in range(M_m)] for j in range(M_m)]
 
-    #First Block
     M_pos = copy.deepcopy(M)
+    M_neg = [[-1*M[i][j] for j in range(M_n)] for i in range(M_m)]
+
+    #First Block
     for i in range(M_m):
-        M_pos[i].extend(I_neg[i])
-    logging.debug(f"M_pos: {M_pos}")
+        I_neg[i].extend(M_pos[i])
+        #M_pos[i].extend(I_neg[i])
+    logging.debug(f"First Block: {I_neg}")
+    First_block = copy.deepcopy(M_neg)
 
     #Second Block
     M_neg = copy.deepcopy(M)
+    
     for i in range(M_m):
-        for j in range(M_n):
-            M_neg[i][j] = -1*M_neg[i][j]
-        M_neg[i].extend(I_pos[i])
-    logging.debug(f"M_neg: {M_neg}")
+        #for j in range(M_n):
+        #    M_neg[i][j] = -1*M_neg[i][j]
+        #M_neg[i].extend(I_pos[i])
+        I_pos[i].extend(M_neg[i])
+
+    logging.debug(f"Second Block: {I_pos}")
+    Second_block = copy.deepcopy(I_pos)
 
     #Third Block
     A_in = copy.deepcopy(A)
+    Third_block = []
     for i in range(A_m):
-        A_in[i].extend([0 for j in range(M_m)])
-    logging.debug(f"A_in: {A_in}")
+        logging.debug([0 for i in range(M_m)])
+        logging.debug(A_in[i])
+        logging.debug([0 for i in range(M_m)].extend(A_in[i]))
+        Third_block.append([0 for i in range(M_m)].extend(A_in[i]))
 
-    A_new = M_pos + M_neg + A_in
+    logging.debug(f"Third_block: {Third_block}")
+
+    A_new = First_block + Second_block + Third_block 
 
     #create new b vector whcih is redudant
     b_new = [0 for i in range(2*M_m)]

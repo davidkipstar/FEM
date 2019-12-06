@@ -27,11 +27,14 @@ def _write(fname, **data):
                     logging.debug(line)
                     f.write(line)
                     f.write('\n')
-                if key == 'A':
-                    logging.debug(f"{key}: {type(A[0])}")
 
+                if key == 'A':
+
+                    logging.debug(f"{key}: {type(A[0])}")
                     if type(A[0]) != list:
+                        
                         line = ' '.join(list(map(str, matrix)))
+                        
                         logging.debug(line)
                         f.write(line)
                         f.write('\n')
