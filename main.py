@@ -15,12 +15,13 @@ logger.setLevel(logging.DEBUG)
 
 def _write(fname, **data):
     try:
-        logging.debug(f"Writing to {fname}: \n {data}")
-
+        logging.debug(f"Writing to {fname}: ")
         with open(fname, 'w') as f:
             for key, matrix in data.items():
+
                 f.write(key)
                 f.write('\n')
+
                 if key == 'b':
                     logging.debug("b")
                     line =  ' '.join(list(map(str, matrix)))
@@ -29,22 +30,11 @@ def _write(fname, **data):
                     f.write('\n')
 
                 if key == 'A':
-
-                    logging.debug(f"{key}: {type(A[0])}")
-                    if type(A[0]) != list:
-                        
-                        line = ' '.join(list(map(str, matrix)))
-                        
+                    for row in matrix:
+                        line = ' '.join(list(map(str, row)))
                         logging.debug(line)
                         f.write(line)
                         f.write('\n')
-                    else:
-
-                        for row in matrix:
-                            line = ' '.join(list(map(str, row)))
-                            logging.debug(line)
-                            f.write(line)
-                            f.write('\n')
 
     except Exception as e:
         print(e)
@@ -54,21 +44,32 @@ def _parser(filepath, identifier = 'A'):
         A = []
         _idx = 0  
         lines = f.readlines()
-        #find the starting position 
+
         for idx, line in enumerate(lines):
             line = line.strip()
-            #prfloat(line)
+
             if line[0] == identifier:    
                 _idx = idx
                 break
 
-        for idx, line in enumerate(lines[_idx+1:]):
-            if not line[0].isnumeric() and not line[0] == '-':
-                break
-            else:
-                A.append(list(map(float, line.split(' '))))
-                if identifier == 'b':
-                    A = list(map(float, line.split(' ')))
+        if identifier == 'A':
+
+            for idx, line in enumerate(lines[_idx+1:]):
+                if not line[0].isnumeric() and not line[0] == '-':
+                    break
+                else:
+                    A.append(list(map(float, line.split(' '))))
+                    if identifier == 'b':
+                        A = list(map(float, line.split(' ')))
+
+        elif identifier == 'M':
+            for idx, line in enumerate(lines[_idx:]):
+                if not line[0].isnumeric() and not line[0] == '-':
+                    break
+                else:
+                    A.append(list(map(float, line.split(' '))))
+                    if identifier == 'b':
+                        A = list(map(float, line.split(' ')))
 
         logging.debug(f"Parsed {identifier}: \n {A}")
     return A
@@ -106,8 +107,8 @@ elif arg == 'image':
 
     A =  _parser(input_file_1, identifier = 'A')
     b =  _parser(input_file_1, identifier = 'b')
-
     M =  _parser(input_file_2, identifier = 'M')
+
     logging.debug(f"M : {M}")
     logging.debug(f"A : {A}")
     logging.debug(f"b : {b}")
