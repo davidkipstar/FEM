@@ -1,7 +1,7 @@
 import logging 
 import math
-def FME(A, b, k, n):
 
+def FME(A, b, k, n):
     n_it = n - k
     for m in range(n_it):
    

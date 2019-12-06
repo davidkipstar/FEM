@@ -45,10 +45,20 @@ def image(M, A, b):
     logging.debug(f"A_in: {A_in}")
 
     A_new = M_pos + M_neg + A_in
+
     #create new b vector whcih is redudant
     b_new = [0 for i in range(2*M_m)]
     b_new.extend(b)
+
+    logging.debug(f"Size: b: {len(b_new)}, A: {len(A_new)}")
     #project onto dimension of n-A_n
-    A_new_proj, b_new_proj = FME(A_new, b_new, M_n, n)
+    #
+    logging.debug(f"Project: M {M_n}, n: {n}, A_n: {A_n}")
+    A_new_rows = 2*M_n+A_n
+    logging.debug(f"\t rows: {A_new_rows} reduction: {A_new_rows - A_n}")
+
+    A_new_proj, b_new_proj = FME(A_new, b_new, A_new_rows, A_new_rows - A_n)
+    logging.debug(f"A_new_proj: {A_new_proj}")
+    logging.debug(f"b_new_proj: {b_new_proj}")
 
     return A_new_proj, b_new_proj

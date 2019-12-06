@@ -17,11 +17,15 @@ def nextline(f):
 
 def testequalpolyhedra(ineq1,ineq2,testpoints):
   for x in testpoints:
+    #
     inP1 = 1
     A, b = ineq1
-    #logging.debug("Left:")
-    #logging.debug(f"A: {A}")
-    #logging.debug(f"b: {b}")
+
+    logging.debug("Left:")
+    logging.debug(f"A: {A}")
+    logging.debug(f"b: {b}")
+    logging.debug(f"x: {x}")
+
     for i in range(len(A)):
       lhs = sum(A[i][j]*x[j] for j in range(len(A[i])))
       if lhs < b[i]-0.0000000000003:
@@ -31,9 +35,11 @@ def testequalpolyhedra(ineq1,ineq2,testpoints):
         inP1 = 0
     inP2 = 1
     A, b = ineq2
+
     #logging.debug("Right:")
     #logging.debug(f"A: {A}")
     #logging.debug(f"b: {b}")
+
     for i in range(len(A)):
       lhs = sum(A[i][j]*x[j] for j in range(len(A[i])))
       if lhs < b[i]-0.00000000000001:
@@ -256,7 +262,7 @@ def test_compute_x_or_y(instancefile):
         return False
   return True
 
-print("Test project: {}".format(test_project("./project_instances.dat","./project_solutions.dat","./testpoints.dat")))
+#print("Test project: {}".format(test_project("./project_instances.dat","./project_solutions.dat","./testpoints.dat")))
 print("Test image: {}".format(test_image("./image_instances.dat","./image_solutions.dat","./testpoints.dat")))
 print("Test H_representation: {}".format(test_H_representation("./H_representation_instances.dat",
                                                         "./H_representation_solutions.dat",
